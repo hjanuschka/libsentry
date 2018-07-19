@@ -4,7 +4,8 @@ include(GNUInstallDirs)
 
 INCLUDE(cmake/FindCURL.cmake)
 
-
+# be pedantic
+set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic -Wextra")
 
 #lib sentry
 
