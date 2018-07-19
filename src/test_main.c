@@ -11,7 +11,9 @@
 
 int main(int argc, const char *argv[])
 {
+    printf("\n\n################# UNIT TESTS ###################\n");
     int result = ctest_main(argc, argv);
 
+    printf("\n\n################# UNIT TESTS ###################\n\n\n");
     return result;
 }

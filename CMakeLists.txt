@@ -45,7 +45,9 @@ add_executable(sentry_test src/test_main.c ${TEST_FILES})
 target_include_directories(sentry_test PUBLIC include/)
 target_include_directories(sentry_test PUBLIC api/)
 target_link_libraries(sentry_test sentry)
-
-
 add_test(sentry_test COMMAND sentry_test)
+
+#add_test(sentry_test COMMAND sentry_test)
+add_custom_target(check COMMAND sentry_test)
+
 
