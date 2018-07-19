@@ -8,7 +8,7 @@ INCLUDE(cmake/FindCURL.cmake)
 
 #lib sentry
 
-add_library(sentry SHARED src/main.c)
+add_library(sentry SHARED src/main.c deps/parson/parson.c)
 set_target_properties(sentry PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
