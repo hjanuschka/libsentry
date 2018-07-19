@@ -35,3 +35,13 @@ target_link_libraries(sentry_lib_cli sentry)
 
 install(TARGETS sentry_lib_cli RUNTIME DESTINATION bin)
 
+
+# tests
+
+  file(GLOB TEST_FILES tests/*.c)
+  add_executable(sentry_test src/test_main.c ${TEST_FILES})
+  target_include_directories(sentry_test PUBLIC include/)
+  target_include_directories(sentry_test PUBLIC api/)
+  target_link_libraries(sentry_test sentry)
+
+
