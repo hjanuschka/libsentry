@@ -10,7 +10,7 @@ CTEST(more, test2) {
 }
 
 CTEST(more, test1) {
-    ASSERT_EQUAL(5, demo_func(2));
+    ASSERT_EQUAL(4, demo_func(2));
 }
 
 

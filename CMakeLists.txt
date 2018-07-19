@@ -14,7 +14,7 @@ set_target_properties(sentry PROPERTIES
     SOVERSION 1
     PUBLIC_HEADER api/sentry.h)
 configure_file(sentry.pc.in sentry.pc @ONLY)
-target_include_directories(sentry PRIVATE .)
+target_include_directories(sentry PRIVATE . deps/url)
 
 set(LIB_LINK ${CURL_LIBRARY})
 
@@ -43,6 +43,7 @@ enable_testing()
 file(GLOB TEST_FILES tests/*.c)
 add_executable(sentry_test src/test_main.c ${TEST_FILES})
 target_include_directories(sentry_test PUBLIC include/)
+target_include_directories(sentry_test PUBLIC deps/url/)
 target_include_directories(sentry_test PUBLIC api/)
 target_link_libraries(sentry_test sentry)
 add_test(sentry_test COMMAND sentry_test)
