@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.7)
-project(sentry VERSION 1.0.0 LANGUAGES C DESCRIPTION "Sentry C Library")
+cmake_minimum_required(VERSION 3.9)
+project(sentry VERSION 1.0.0 DESCRIPTION "Sentry C Library")
 include(GNUInstallDirs)
 
 INCLUDE(CheckIncludeFiles)
