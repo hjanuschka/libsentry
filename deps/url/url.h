@@ -170,8 +170,9 @@ strdup (const char *str) {
 static char *
 strff (char *ptr, int n) {
   int y = 0;
+  char * orig_ptr = ptr;
   for (int i = 0; i < n; ++i) {
-    y = *ptr++;
+    y = *orig_ptr++;
   }
 
   return strdup(ptr);
