@@ -175,7 +175,7 @@ strff (char *ptr, int n) {
     y = *orig_ptr++;
   }
 
-  return strdup(ptr);
+  return strdup(orig_ptr);
 }
 
 static char *
