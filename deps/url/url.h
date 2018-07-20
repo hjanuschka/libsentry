@@ -238,7 +238,9 @@ get_part (char *url, const char *format, int l) {
 url_data_t *
 url_parse (char *url) {
   url_data_t *data = malloc(sizeof(url_data_t));
-  if (!data) return NULL;
+  if (!data) {
+      return NULL;
+  }
 
   data->href = url;
   char *tmp;
@@ -286,6 +288,7 @@ url_parse (char *url) {
               ? get_part(tmp_url, ":%s", protocol_len + auth_len + hostname_len)
               : get_part(tmp_url, "/%s", protocol_len + auth_len + hostname_len);
 
+  free(tmp_url);
   char *path = malloc(strlen(tmp_path) * sizeof(char));
   if (!path) return NULL;
   char *fmt = (is_ssh)? "%s" : "/%s";
