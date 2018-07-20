@@ -17,6 +17,11 @@ struct sentry_stacktrace {
     list_t * frames;
 };
 
+struct sentry_breadcrumbs {
+    list_t * crumbs;
+};
+
+
 struct sentry_payload {
   struct sentry_stacktrace * stacktrace;
   struct sentry_breadcrumbs * breadcrumbs;
