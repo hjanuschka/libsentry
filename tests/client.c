@@ -4,9 +4,11 @@
 #include <stdlib.h>
 
 // there are many different ASSERT macro's (see ctest.h)
-CTEST(client, init) {
+CTEST(client, sets_dsn) {
   struct sentry_client *c;
   c = sentry_create_client();
   sentry_set_dsn(c, "http://sentry.io/Asdas");
   ASSERT_STR("sentry.io", c->dsn->hostname);
+  sentry_destroy_client(c);
+
 }
