@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.9)
-project(sentry VERSION 1.0.0 DESCRIPTION "Sentry C Library")
+cmake_minimum_required(VERSION 3.7)
+project(sentry)
 include(GNUInstallDirs)
 
 INCLUDE(CheckIncludeFiles)
@@ -40,9 +40,8 @@ check_library_exists(${JSON_LIBRARY}   json_object_new_int64    ""   JSON_OLD64)
 CHECK_STRUCT_HAS_MEMBER("struct json_object_iter" key json.h HAVE_JSON_OBJECT_ITER LANGUAGE C)
 
 add_library(sentry SHARED deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c)
-set_target_properties(sentry PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    SOVERSION 1
+set_target_properties(sentry PROPERTIES  VERSION 1.0
+  SOVERSION 1
     PUBLIC_HEADER "api/sentry.h;deps/list/list.h")
 configure_file(sentry.pc.in sentry.pc @ONLY)
 

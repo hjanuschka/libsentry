@@ -23,6 +23,7 @@ int sentry_destroy_dsn(struct sentry_dsn *d) {
 int sentry_set_dsn(struct sentry_client *c, char *dsn) {
   url_data_t *parsed = url_parse(dsn);
   c->dsn->hostname = strdup(parsed->host);
+  url_free(parsed);
   return 0;
 }
 
