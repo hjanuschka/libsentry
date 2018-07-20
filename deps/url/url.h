@@ -193,8 +193,14 @@ get_part (char *url, const char *format, int l) {
   char *fmt_url = strdup(url);
   char *ret = malloc(sizeof(char));
 
-  if (!tmp || !tmp_url || !fmt_url || !ret)
+  if (!tmp || !tmp_url || !fmt_url || !ret) {
+    if(tmp) free(tmp);
+    if(tmp_url) free(tmp_url);
+    if(fmt_url) free(fmt_url);
+    if(ret) free(ret);
     return NULL;
+  }
+
 
   strcpy(tmp, "");
   strcpy(fmt_url, "");
@@ -209,6 +215,7 @@ get_part (char *url, const char *format, int l) {
 
   if (0 != strcmp(tmp, tmp_url)) {
     has = true;
+    free(ret);
     ret = strdup(tmp);
   }
 
