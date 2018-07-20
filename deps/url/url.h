@@ -158,7 +158,7 @@ url_data_inspect (url_data_t *data);
 char *
 strdup (const char *str) {
   int n = strlen(str) + 1;
-  char *dup = malloc(n);
+  char *dup = malloc(sizeof(char)*n);
   if (dup) {
       strcpy(dup, str);
   }
