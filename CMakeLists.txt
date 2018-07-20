@@ -83,4 +83,5 @@ add_test(sentry_test COMMAND sentry_test)
 #add_test(sentry_test COMMAND sentry_test)
 add_custom_target(check COMMAND sentry_test)
 
-
+# Have cmake create a compile database
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
