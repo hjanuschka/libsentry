@@ -39,13 +39,13 @@ check_library_exists(${JSON_LIBRARY}   json_object_new_int64    ""   JSON_OLD64)
 
 CHECK_STRUCT_HAS_MEMBER("struct json_object_iter" key json.h HAVE_JSON_OBJECT_ITER LANGUAGE C)
 
-add_library(sentry SHARED deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c)
+add_library(sentry SHARED deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c src/url.c)
 set_target_properties(sentry PROPERTIES  VERSION 1.0
   SOVERSION 1
     PUBLIC_HEADER "api/sentry.h;deps/list/list.h")
 configure_file(sentry.pc.in sentry.pc @ONLY)
 
-target_include_directories(sentry PUBLIC . deps/url deps/list api/)
+target_include_directories(sentry PUBLIC . deps/url deps/list api/ include/)
 target_include_directories(sentry PRIVATE ${JSON_INCLUDE_DIRS})
 
 set(LIB_LINK ${CURL_LIBRARY} ${JSON_LIBRARY})
