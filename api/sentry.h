@@ -27,6 +27,17 @@ struct sentry_payload {
   struct sentry_breadcrumbs * breadcrumbs;
 };
 
+
+//Client
+extern struct sentry_client * sentry_create_client();
+extern int sentry_set_dsn(struct sentry_client * c, char * dsn);
+extern int sentry_destroy_client(struct sentry_client * c);
+
+//DSN
+
+extern int sentry_destroy_dsn(struct sentry_dsn * d);
+extern struct sentry_dsn * sentry_create_dsn();
+
 /*
 sentry_client * c;
 sentry_payload * sp;
