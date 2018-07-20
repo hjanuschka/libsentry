@@ -2,8 +2,14 @@ cmake_minimum_required(VERSION 3.9)
 project(sentry VERSION 1.0.0 DESCRIPTION "Sentry C Library")
 include(GNUInstallDirs)
 
-INCLUDE(cmake/FindCURL.cmake)
+INCLUDE(CheckIncludeFiles)
+INCLUDE(CheckLibraryExists)
+INCLUDE(CheckSymbolExists)
+INCLUDE(CheckFunctionExists)
+include(CheckStructHasMember)
 
+INCLUDE(cmake/FindCURL.cmake)
+INCLUDE(cmake/findjson.cmake)
 # be pedantic
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -pedantic -Wextra")
 
@@ -27,8 +33,13 @@ ELSE()
 ENDIF()
 
 #lib sentry
+check_library_exists(${JSON_LIBRARY}   json_object_object_get_ex    ""   JSON_OLD)
+check_library_exists(${JSON_LIBRARY}   json_object_new_int64    ""   JSON_OLD64)
 
-add_library(sentry SHARED src/main.c deps/parson/parson.c)
+SET(CMAKE_REQUIRED_INCLUDES ${JSON_INCLUDE_DIRS})
+CHECK_STRUCT_HAS_MEMBER("struct json_object_iter" key json.h HAVE_JSON_OBJECT_ITER LANGUAGE C)
+
+add_library(sentry SHARED src/main.c)
 set_target_properties(sentry PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
@@ -36,7 +47,7 @@ set_target_properties(sentry PROPERTIES
 configure_file(sentry.pc.in sentry.pc @ONLY)
 target_include_directories(sentry PRIVATE . deps/url)
 
-set(LIB_LINK ${CURL_LIBRARY})
+set(LIB_LINK ${CURL_LIBRARY} ${JSON_LIBRARY})
 
 target_link_libraries(sentry ${LIB_LINK})
 link_directories()
