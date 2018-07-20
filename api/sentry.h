@@ -1,7 +1,7 @@
 //Sentry Public API
 #ifndef SENTRYLIB_H_
 #define SENTRYLIB_H_
-#include <sentry/list.h>
+#include "sentry/list.h"
 struct sentry_dsn {
   long project_id;
   char * hostname;
