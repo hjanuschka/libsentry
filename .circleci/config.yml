@@ -3,6 +3,9 @@ jobs:
   build:
     docker:
       - image: debian:sid
+        environment:
+          ## this enables colors in the output
+          TERM: xterm
     steps:
       - checkout
       - run:
