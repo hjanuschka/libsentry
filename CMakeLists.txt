@@ -36,16 +36,19 @@ ENDIF()
 check_library_exists(${JSON_LIBRARY}   json_object_object_get_ex    ""   JSON_OLD)
 check_library_exists(${JSON_LIBRARY}   json_object_new_int64    ""   JSON_OLD64)
 
-SET(CMAKE_REQUIRED_INCLUDES ${JSON_INCLUDE_DIRS})
+
 CHECK_STRUCT_HAS_MEMBER("struct json_object_iter" key json.h HAVE_JSON_OBJECT_ITER LANGUAGE C)
 
-add_library(sentry SHARED src/main.c)
+add_library(sentry SHARED deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c)
 set_target_properties(sentry PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION 1
-    PUBLIC_HEADER api/sentry.h)
+    PUBLIC_HEADER "api/sentry.h;deps/list/list.h")
 configure_file(sentry.pc.in sentry.pc @ONLY)
-target_include_directories(sentry PRIVATE . deps/url)
+
+target_include_directories(sentry PRIVATE . deps/url deps/list)
+target_include_directories(sentry PRIVATE ${JSON_INCLUDE_DIRS})
+target_include_directories(sentry PUBLIC deps/url/)
 
 set(LIB_LINK ${CURL_LIBRARY} ${JSON_LIBRARY})
 
@@ -54,7 +57,7 @@ link_directories()
 
 install(TARGETS sentry
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sentry)
 install(FILES ${CMAKE_BINARY_DIR}/sentry.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
