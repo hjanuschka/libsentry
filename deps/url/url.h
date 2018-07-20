@@ -193,6 +193,7 @@ get_part (char *url, const char *format, int l) {
   char *tmp = malloc(sizeof(char));
   char *tmp_url = strdup(url);
   char *fmt_url = strdup(url);
+  char *fmt_url_o = fmt_url;
   char *ret = malloc(sizeof(char));
 
   if (!tmp || !tmp_url || !fmt_url || !ret) {
@@ -228,6 +229,7 @@ get_part (char *url, const char *format, int l) {
   free(tmp);
   free(tmp_url);
   free(fmt_url);
+  free(fmt_url_o);
 
   return has? ret : NULL;
 }
