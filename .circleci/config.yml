@@ -6,6 +6,9 @@ jobs:
     steps:
       - checkout
       - run:
+        name: Install Dependencies
+        command: sudo apt-get update && sudo apt-get install -y build-essentials make cmake libcurl4-openssl-dev libjson-c-dev
+      - run:
           name: Build
           command: mkdir build
           command: cd build
