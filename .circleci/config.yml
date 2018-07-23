@@ -16,4 +16,4 @@ jobs:
           command: mkdir build && cd build && cmake .. && make check
       - run:
           name: Valgrind
-          command: valgrind --error-exitcode=42 --leak-check=full ./sentry_test
+          command: cd build/ && valgrind --error-exitcode=42 --leak-check=full ./sentry_test
