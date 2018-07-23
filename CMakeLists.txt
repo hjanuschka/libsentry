@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.7)
 project(sentry)
+option(WITH_PROF "Enable profiling and coverage report analysis" OFF)
 include(GNUInstallDirs)
 
 INCLUDE(CheckIncludeFiles)
@@ -23,6 +24,11 @@ endif(NOT CMAKE_BUILD_TYPE)
 message("CMAKE_C_FLAGS_DEBUG is ${CMAKE_C_FLAGS_DEBUG}")
 message("CMAKE_C_FLAGS_RELEASE is ${CMAKE_C_FLAGS_RELEASE}")
 
+
+
+
+
+# assuming target "my_prog" exists
 message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 IF(CMAKE_BUILD_TYPE MATCHES Debug)
   message("Debug build.")
@@ -60,6 +66,10 @@ install(FILES ${CMAKE_BINARY_DIR}/sentry.pc
     DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig)
 
 
+
+
+
+
 # library test tool
 add_executable(sentry_lib_cli src/argtable3.c src/tools/lib_cli.c)
 target_include_directories(sentry_lib_cli PUBLIC api/)
@@ -78,6 +88,9 @@ target_include_directories(sentry_test PUBLIC include/)
 target_include_directories(sentry_test PUBLIC deps/url/)
 target_include_directories(sentry_test PUBLIC api/)
 target_link_libraries(sentry_test sentry)
+
+
+
 add_test(sentry_test COMMAND sentry_test)
 
 #add_test(sentry_test COMMAND sentry_test)
@@ -85,3 +98,16 @@ add_custom_target(check COMMAND sentry_test)
 
 # Have cmake create a compile database
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(WITH_PROF)
+		message("PROFiling enabled")
+		include(cmake/coverage.cmake)
+		APPEND_COVERAGE_COMPILER_FLAGS()
+
+    set(COVERAGE_LCOV_EXCLUDES '../tests/*' 'ctest.h')
+		#setup_target_for_coverage(sentry_coverage sentry_test coverage)
+	  SETUP_TARGET_FOR_COVERAGE_LCOV(NAME coverage EXECUTABLE sentry_test DEPENDENCIES sentry sentry_test)	
+endif()
+
+
+
