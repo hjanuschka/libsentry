@@ -4,6 +4,7 @@
 #include "list.h"
 struct sentry_dsn {
   long project_id;
+  int b;
   char * hostname;
   char * key;
   long port;
