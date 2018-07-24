@@ -5,7 +5,7 @@
 struct sentry_dsn {
   long project_id;
   char * hostname;
-  char * key;
+  char * key1;
   long port;
 };
 
