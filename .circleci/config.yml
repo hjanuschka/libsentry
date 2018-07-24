@@ -25,7 +25,7 @@ jobs:
           command: cd build/ && valgrind --error-exitcode=42 --leak-check=full ./sentry_test
       - run:
           name: coveralls.io dependencies
-          command: pip install cpp-coveralls && gem install coveralls
+          command: pip install cpp-coveralls
       - run:
           name: coveralls.io
           command: cd build/ && make coveralls
