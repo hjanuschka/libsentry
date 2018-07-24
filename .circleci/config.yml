@@ -20,6 +20,8 @@ jobs:
       - run:
           name: Tests + Coverage
           command: mkdir build && cd build && cmake .. -DWITH_PROF=ON && make coverage
+      - store_artifacts:
+          path: build/coverage
       - run:
           name: Valgrind
           command: cd build/ && valgrind --error-exitcode=42 --leak-check=full ./sentry_test
