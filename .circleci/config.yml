@@ -10,10 +10,16 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command:  apt-get update &&  apt-get install -y build-essential make cmake libcurl4-openssl-dev libjson-c-dev valgrind lcov gcovr
+          command:  apt-get update &&  apt-get install -y build-essential make cmake libcurl4-openssl-dev libjson-c-dev valgrind lcov gcovr ruby python
       - run:
           name: Tests + Coverage
           command: mkdir build && cd build && cmake .. -DWITH_PROF=ON && make coverage
       - run:
           name: Valgrind
           command: cd build/ && valgrind --error-exitcode=42 --leak-check=full ./sentry_test
+      - run:
+          name: coveralls.io dependencies
+          command: pip install cpp-coveralls && gem install coveralls
+      - run:
+          name: coveralls.io
+          command: cd build/ && make coveralls

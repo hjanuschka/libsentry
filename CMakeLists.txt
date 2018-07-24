@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.7)
 project(sentry)
 option(WITH_PROF "Enable profiling and coverage report analysis" OFF)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake)
 include(GNUInstallDirs)
 
 INCLUDE(CheckIncludeFiles)
@@ -45,7 +46,10 @@ check_library_exists(${JSON_LIBRARY}   json_object_new_int64    ""   JSON_OLD64)
 
 CHECK_STRUCT_HAS_MEMBER("struct json_object_iter" key json.h HAVE_JSON_OBJECT_ITER LANGUAGE C)
 
-add_library(sentry SHARED deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c src/url.c)
+
+set(LIB_SRC deps/list/list_node.c deps/list/list_iterator.c deps/list/list.c src/main.c src/url.c)
+
+add_library(sentry SHARED ${LIB_SRC})
 set_target_properties(sentry PROPERTIES  VERSION 1.0
   SOVERSION 1
     PUBLIC_HEADER "api/sentry.h;deps/list/list.h")
@@ -91,7 +95,7 @@ target_link_libraries(sentry_test sentry)
 
 
 
-add_test(sentry_test COMMAND sentry_test)
+add_test(sentry_test sentry_test)
 
 #add_test(sentry_test COMMAND sentry_test)
 add_custom_target(check COMMAND sentry_test)
@@ -107,6 +111,13 @@ if(WITH_PROF)
     set(COVERAGE_LCOV_EXCLUDES '../tests/*' 'ctest.h')
 		#setup_target_for_coverage(sentry_coverage sentry_test coverage)
 	  SETUP_TARGET_FOR_COVERAGE_LCOV(NAME coverage EXECUTABLE sentry_test DEPENDENCIES sentry sentry_test)	
+
+
+    include(Coveralls)
+    coveralls_setup(
+        "${LIB_SRC}" 
+        ON
+        "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake")
 endif()
 
 
